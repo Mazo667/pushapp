@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pushapp/presentation/blocs/notifications/notifications_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,8 +18,7 @@ class HomeScreen extends StatelessWidget {
             context.read<NotificationsBloc>()
                 .requestPermission();
             //Obtengo el token
-            context.read<NotificationsBloc>()
-                .getFCMToken();
+           // context.read<NotificationsBloc>().getFCMToken();
           }, icon: const Icon(Icons.settings))
         ],
       ),
@@ -41,6 +41,9 @@ class _HomeView extends StatelessWidget {
             title: Text(notification.title),
             subtitle: Text(notification.body),
             leading: notification.imageUrl != null ? Image.network(notification.imageUrl!) : null,
+            onTap: () {
+              context.push('/push-details/${notification.messageId}');
+            },
           );
         },);
   }
